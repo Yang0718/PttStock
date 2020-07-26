@@ -30,8 +30,12 @@
 <!-- 顯示查到的東西 -->
 <div class="container">
     <div class="headings">
-      <h4 class="title">你稽查的是： {{ query }}</h4>
-      <span class="hr"></span>
+        {% if query_type == 'pttID' %}
+            <h4 class="title">你稽查的是： {{ query }}發過的標的文</h4>
+        {% else if query_type == 'stockID' %}
+            <h4 class="title">你稽查的是： {{ query }}的相關標的文</h4>
+        {% endif %}
+        <span class="hr"></span>
 </div>
 
 <!-- <section>
