@@ -1,0 +1,6 @@
+ptt_stock_django/db.sqlite3
+ptt_stock_django/*.sqlite3
+*.sqlite3
+# crawl_ptt_stock/data/stock_db.pickle
+# crawl_ptt_stock/data/ptt_table.pickle
+# crawl_ptt_stock/data/ptt_table.csv

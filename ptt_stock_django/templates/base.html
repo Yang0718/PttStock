@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <!-- jQuery v1.9.1 -->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <!-- DataTables v1.10.16 -->
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <title>Ptt Stock 稽查員</title>
+  </head>
+  <body> 
+    <!-- 在bootstrap複製好的navbar模板，直接貼在body下面 -->
+    <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #1f81c7;">
+        <a class="navbar-brand " href="{% url 'home' %}">PTT Stock 稽查員</a>
+        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'db' %}">標的文a倉庫 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'about' %}">關於 <span class="sr-only">(current)</span></a>
+              </li>
+          </ul>
+          
+        </div>
+      </nav>
+    <div class="container">
+        <br/>
+        
+        {% block content%}
+        {% endblock %}
+    </div>
+
+
+    <!-- [刪掉了，但之後可參考]把網頁的最下方邊界拉高，否則翻頁按鈕會被最下方的navbar擋住 -->
+    <!-- <style>
+        body{
+            padding-bottom: 50px !important;
+            }
+    </style> -->
+    
+  </body>
+</html>

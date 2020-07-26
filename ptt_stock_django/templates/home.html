@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+
+{% block content%}
+
+<div class="container">
+    <!-- 標題 -->
+    <div class="headings">
+        <h2 class="title">輸入搜尋條件</h4>
+        <span class="hr"></span>
+    </div>
+    <!-- 兩顆按鈕 -->
+    <form action="{% url 'home' %}" class="form-inline my-2 my-lg-0" method="POST">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" placeholder="type..." aria-label="Search"
+        name = 'pttIDquery'>
+        <button class="btn btn-outline-success my-2 my-sm-0 button_custom" type="submit">查詢發文ID</button>
+    </form>
+    <br/>
+    <form action="{% url 'home' %}" class="form-inline my-2 my-lg-0" method="POST">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" placeholder="type..." aria-label="Search"
+        name = 'stockIDquery'>
+        <button class="btn btn-outline-success my-2 my-sm-0 button_custom" type="submit">查詢股票代號</button>
+    </form>
+</div>
+<br/><br/>
+
+
+<!-- 顯示查到的東西 -->
+<div class="container">
+    <div class="headings">
+      <h4 class="title">你稽查的是： {{ query }}</h4>
+      <span class="hr"></span>
+</div>
+
+<!-- <section>
+    <div class="container">
+      <div class="headings">
+        <h1 class="title">About</h1>
+        <span class="hr"></span>
+      </div>
+      <a>專案介紹</a>
+
+    </div>
+</section> -->
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/datatables.min.js"></script>
+
+{% if selected_data and selected_data|length > 0 %}
+    <table id="selectedtable" class="table table-bordered table-hover"> 
+        <!-- thead:表格標題，即table head，改他的class可以改標題樣式 -->
+        <thead class="table-primary">  
+        <tr>
+            <th class="sortable" scope="col" >分類</th>
+            <th scope="col">日期</th>
+            <th scope="col">標題</th>
+            <th scope="col">作者</th>
+            {% if query_type == 'pttID' %}
+                <th scope="col">標的</th>
+            {% endif %}
+            <th scope="col">推</th>
+            <th scope="col">噓</th>
+            <!-- <th scope="col">箭頭</th> -->
+            <th scope="col">隔日ROI</th>
+            <th scope="col">迄今ROI</th>
+            <!-- <th scope="col">連結</th> -->
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in selected_data %}
+        <tr>
+            <th scope="row">{{ i.Label }}</th>
+            <td>{{ i.Date.date }}</td>
+            <td><a href={{ i.Url }}>{{ i.Title }}</a></td>
+            <td>{{ i.Author }}</td>
+            {% if query_type == 'pttID' %}
+                <td>{{ i.Target }}</td>
+            {% endif %}
+            <td>{{ i.Like }}</td>
+            <td>{{ i.Dislike }}</td>
+            <!-- <td>{{ i.Neutral }}</td> -->
+            {% if i.ROI_1d %}
+                <td>{{ i.ROI_1d }}%</td>
+            {% else %}
+                <td>{{ i.ROI_1d }}</td>
+            {% endif %}
+            {% if i.ROI_overall %}
+                <td>{{ i.ROI_overall }}%</td>
+            {% else %}
+                <td>{{ i.ROI_overall }}</td>
+            {% endif %}
+            <!-- <td><a href={{ i.Url }}>link</a></td> -->
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function() {
+        $('#selectedtable').DataTable( {
+            // "order": [[ 3, "desc" ]]
+        } );
+        } );
+    </script>
+{% else %}
+    查無結果=___=
+{% endif %}
+
+
+<!-- 為了讓兩個按鈕的長度相等，添加CSS樣式 -->
+<style>
+.button_custom {
+    width: 130px !important;
+}
+.headings {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 2em 0;
+}
+.title {
+  margin: 0;
+}
+.hr {
+  display: block;
+  flex: 1;
+  margin: 0 30px;
+  height: 3px;
+  background: #D4D4D4;
+}
+</style>
+
+
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<!-- email的icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<section>
+    <div class="container">
+      <div class="headings">
+        <h1 class="title">關於</h1>
+        <span class="hr"></span>
+      </div>
+      <a>專案介紹</a>
+
+    </div>
+</section>
+<br><br>
+
+<!-- bootstrap的card文件 https://bootstrap.hexschool.com/docs/4.0/components/card/ -->
+<div class="card-deck">
+    <div class="card">
+      
+      <div class="card-body">
+        <h4 class="card-title">GitHub</h4>
+        <p class="card-text"><a href={{ 'https://github.com/Yang0718/ptt_stock_django' }}>https://github.com/Yang0718/ptt_stock_django</a>
+            <br>
+        </p>
+      </div>
+      <div class="card-footer">
+        <p class="card-text"><small class="text-muted">
+            <script language="Javascript">
+                var modiDate = new Date(document.lastModified);
+                var showdate = modiDate.getFullYear()+ "-" + (modiDate.getMonth() + 1)+ "-" + modiDate.getDate() ;
+            document.write("Last modified on: " + showdate);
+            </script>
+        </small></p>
+      </div>
+    </div>
+    <div class="card ">
+      
+      <div class="card-body">
+        <h4 class="card-title"><i class="fa fa-envelope-o" style="font-size:26px"></i> Email </h4>
+        
+        <p class="card-text">yangh0718@gmail.com</p>
+        
+      </div>
+      <div class="card-footer">
+        <p class="card-text"><small class="text-muted">
+            <script language="Javascript">
+                var modiDate = new Date(document.lastModified);
+                var showdate = modiDate.getFullYear()+ "-" + (modiDate.getMonth() + 1)+ "-" + modiDate.getDate() ;
+            document.write("Last modified on: " + showdate);
+            </script>
+        </small></p>
+      </div>
+    </div>
+  </div>
+
+
+<style>
+.headings {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 2em 0;
+}
+
+.title {
+  margin: 0;
+}
+
+.hr {
+  display: block;
+  flex: 1;
+  margin: 0 30px;
+  height: 3px;
+  background: #D4D4D4;
+}
+</style>
+{% endblock %}

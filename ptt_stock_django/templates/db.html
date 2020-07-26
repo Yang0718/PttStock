@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<!DOCTYPE html>
+<html>
+
+<body class="bg-light text-dark">
+
+<div class="container">
+    <div class="headings">
+        <h2 class="title">標的文a倉庫</h2>
+        <span class="hr"></span>
+</div>
+
+<!-- https://getbootstrap.com/docs/4.4/components/pagination/ -->
+
+<!-- 下方table的class裡面添加各種樣式 -->
+<table id="database_table" class="table table-bordered table-hover" width="100%"> 
+    <!-- thead:表格標題，即table head，改他的class可以改標題樣式 -->
+    <thead class="table-primary">  
+      <tr>
+        <th **style="width: 250px;"**scope="col" >No. </th>
+        <th scope="col">分類</th>
+        <th scope="col">標題</th>
+        <th scope="col">作者</th>
+        <th scope="col">標的</th>
+        <th scope="col">推</th>
+        <th scope="col">噓</th>
+        <th scope="col">箭頭</th>
+        <th scope="col">日期</th>
+        <th scope="col">發文價格</th>
+        <th scope="col">隔日ROI</th>
+        <th scope="col">迄今ROI</th>
+        <!-- <th scope="col">連結</th> -->
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in output %}
+      <tr>
+        <th scope="row">{{ i.id }}</th>
+        <td>{{ i.Label }}</td>
+        <td><a href={{ i.Url }}>{{ i.Title }}</a></td>
+        <td>{{ i.Author }}</td>
+        <td>{{ i.Target }}</td>
+        <td>{{ i.Like }}</td>
+        <td>{{ i.Dislike }}</td>
+        <td>{{ i.Neutral }}</td>
+        <td>{{ i.Date.date }}</td>
+        <td>{{ i.Price }}</td>
+        {% if i.ROI_1d %}
+            <td>{{ i.ROI_1d }}%</td>
+        {% else %}
+            <td>{{ i.ROI_1d }}</td>
+        {% endif %}
+        {% if i.ROI_overall %}
+            <td>{{ i.ROI_overall }}%</td>
+        {% else %}
+            <td>{{ i.ROI_overall }}</td>
+        {% endif %}
+
+        <!-- <td><a href={{ i.Url }}>link</a></td> -->
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <script>
+    $(document).ready(function() {
+    $('#database_table').DataTable( {
+        // "order": [[ 3, "desc" ]]
+        // "bPaginate": false,  
+        // "bInfo": false,  
+        // "bFilter": false,
+        "bAutoWidth": false,
+        // "aoColumns" : [
+        //     { sWidth: '50px' },
+        //     { sWidth: '100px' },
+        //     { sWidth: '120px' },
+        //     { sWidth: '300px' }
+        // ]  
+    } );
+    } );
+
+</script>
+
+<!-- 製作頁數按鈕(這邊都註解掉了，因為datatable能直接做好，讚！) -->
+<!-- <ul class="pagination"> -->
+    <!-- 第一頁 -->
+    <!-- <li><a class = "page-link" href="?page=1">1st<i class="fa fa-chevron-right" aria-hidden="true"></i></a></li> -->
+    <!-- 翻上一頁 -->
+    <!-- {% if output.has_previous %} -->
+        <!-- <li><a class="page-link" href="?page={{ output.previous_page_number }}">&laquo;<i class="fa fa-chevron-left" aria-hidden="true"></i></a></li> -->
+    <!-- {% else %} -->
+        <!-- <li class="disabled page-link"><span><i class="fa fa-chevron-left" aria-hidden="true">&laquo;</i></span></li> -->
+    <!-- {% endif %} -->
+
+    <!-- 翻前五頁 -->
+    <!-- {% if output.number|add:'-4' > 1 %}
+        <li><a class = "page-link" href="?page={{ output.number|add:'-5' }}">&hellip;</a></li>
+    {% endif %} -->
+    
+    <!-- 中間的頁數，為了讓前四頁也會顯示總共9個頁數按鈕，把前四頁分開處理 -->
+    <!-- {% if output.number < 5  %}
+        {% for i in output.paginator.page_range %}
+            {% if output.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% elif i < 10 %}
+                <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% for i in output.paginator.page_range %}
+            {% if output.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% elif i > output.number|add:'-5' and i < output.number|add:'5' %}
+                <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+    {% endif %} -->
+    
+    <!-- 翻後五頁 -->
+    <!-- {% if output.paginator.num_pages > output.number|add:'4' %}
+        <li><a class = "page-link" href="?page={{ output.number|add:'5' }}">&hellip;</a></li>
+    {% endif %} -->
+    
+    <!-- 翻下一頁 -->
+    <!-- {% if output.has_next %} -->
+        <!-- <li><a class = "page-link" href="?page={{ output.next_page_number }}">&raquo;<i class="fa fa-chevron-right" aria-hidden="true"></i></a></li> -->
+    <!-- {% else %} -->
+        <!-- <li class="disabled"><span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></li> -->
+    <!-- {% endif %} -->
+    
+    <!-- 最後一頁 -->
+    <!-- <li><a class = "page-link" href="?page={{ output.paginator.num_pages }}">End<i class="fa fa-chevron-right" aria-hidden="true"></i></a></li> -->
+
+
+    <!-- </ul> -->
+</body>
+</html>
+
+<style>
+.headings {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 2em 0;
+}
+.title {
+  margin: 0;
+}
+.hr {
+  display: block;
+  flex: 1;
+  margin: 0 30px;
+  height: 3px;
+  background: #D4D4D4;
+}
+</style>
+{% endblock %}
